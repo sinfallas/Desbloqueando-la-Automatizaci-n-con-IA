@@ -1,0 +1,211 @@
+# Made by: Tecno Consultores 2023
+x-openwebui-base: &openwebui-base
+    image: ghcr.io/open-webui/open-webui:main
+    hostname: ${openhostname}
+    container_name: ${openhostname}
+    pull_policy: ${pull_policy}
+    restart: ${restart}
+    environment:
+      - ENV=prod
+      - CUSTOM_NAME=${CUSTOM_NAME}
+      - WEBUI_NAME=${CUSTOM_NAME}
+      - ENABLE_SIGNUP=true
+      - ENABLE_LOGIN_FORM=true
+      - ENABLE_REALTIME_CHAT_SAVE=false
+      - ENABLE_ADMIN_EXPORT=true
+      - ENABLE_ADMIN_CHAT_ACCESS=true
+      - ENABLE_CHANNELS=true
+      - SHOW_ADMIN_DETAILS=true
+      - DEFAULT_USER_ROLE=pending
+      - DEFAULT_LOCALE=es
+      - AIOHTTP_CLIENT_TIMEOUT=1000
+      - ENABLE_OLLAMA_API=true
+      - ENABLE_OPENAI_API=${ENABLE_OPENAI_API}
+      - OPENAI_API_BASE_URL=${OPENAI_API_BASE_URL}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ENABLE_AUTOCOMPLETE_GENERATION=true
+      - AUTOCOMPLETE_GENERATION_INPUT_MAX_LENGTH=-1
+      - ENABLE_EVALUATION_ARENA_MODELS=false
+      - ENABLE_MESSAGE_RATING=true
+      - ENABLE_COMMUNITY_SHARING=false
+      - ENABLE_TAGS_GENERATION=true
+      - ENABLE_FORWARD_USER_INFO_HEADERS=false
+      - WEBUI_SESSION_COOKIE_SAME_SITE=strict
+      - WEBUI_SESSION_COOKIE_SECURE=true
+      - WEBUI_AUTH_COOKIE_SAME_SITE=strict
+      - WEBUI_AUTH_COOKIE_SECURE=true
+      - WEBUI_AUTH=true
+      - OFFLINE_MODE=false
+      - RESET_CONFIG_ON_START=false
+      - SAFE_MODE=false
+      - CORS_ALLOW_ORIGIN=*
+      - WHISPER_MODEL_AUTO_UPDATE=true
+      - ENABLE_GOOGLE_DRIVE_INTEGRATION=false
+      - GOOGLE_DRIVE_CLIENT_ID=
+      - GOOGLE_DRIVE_API_KEY=
+      - ENABLE_IMAGE_GENERATION=false
+      - IMAGE_GENERATION_ENGINE=comfyui
+      - IMAGE_GENERATION_MODEL=
+      - IMAGE_SIZE=512x512
+      - IMAGE_STEPS=50
+      - COMFYUI_BASE_URL=${COMFYUI_BASE_URL}
+      - COMFYUI_API_KEY=${COMFYUI_API_KEY}
+      - ENABLE_WEBSOCKET_SUPPORT=true
+      - WEBSOCKET_MANAGER=redis
+      - WEBSOCKET_REDIS_URL=${UREDIS}
+      - REDIS_URL=${UREDIS}
+      - ENABLE_SEARCH_QUERY_GENERATION=true
+      - BRAVE_SEARCH_API_KEY=${BRAVE_SEARCH_API_KEY}
+      #- http_proxy=${http_proxy}
+      #- https_proxy=${https_proxy}
+    ports:
+      - ${PORT}:8080
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - ./openwebui:/app/backend/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
+x-n8n-base: &n8n-base
+    image: n8nio/n8n:latest
+    hostname: ${nhostname}
+    container_name: ${nhostname}
+    pull_policy: ${pull_policy}
+    restart: ${restart}
+    environment:
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - N8N_PERSONALIZATION_ENABLED=true
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - EXECUTIONS_DATA_PRUNE=true
+      - EXECUTIONS_DATA_MAX_AGE=168
+      - EXECUTIONS_DATA_PRUNE_MAX_COUNT=10000
+      - N8N_SECURE_COOKIE=false
+      - DB_TYPE=${DB_TYPE}
+      - DB_POSTGRESDB_HOST=${DATABASE_HOST}
+      - DB_POSTGRESDB_PORT=${POSTGRESDB_PORT}
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_DB}
+      - DB_POSTGRESDB_USER=${POSTGRES_USER}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_POSTGRESDB_POOL_SIZE=2
+      - DB_POSTGRESDB_SSL_ENABLED=false
+      - N8N_TEMPLATES_ENABLED=true
+      - NODE_FUNCTION_ALLOW_EXTERNAL=*
+      - NODE_FUNCTION_ALLOW_BUILTIN=*
+      - N8N_HIRING_BANNER_ENABLED=false
+      - N8N_GRACEFUL_SHUTDOWN_TIMEOUT=30
+      - N8N_REINSTALL_MISSING_PACKAGES=true
+      - N8N_METRICS=false
+      - EXECUTIONS_DATA_SAVE_ON_ERROR=all
+      - EXECUTIONS_DATA_SAVE_ON_SUCCESS=all
+      - EXECUTIONS_DATA_SAVE_ON_PROGRESS=false
+      - EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS=true
+      - N8N_COMMUNITY_PACKAGES_ENABLED=true
+      - WEBHOOK_URL=${WEBHOOK_URL}
+      - N8N_EDITOR_BASE_URL=${WEBHOOK_URL}
+      - N8N_PAYLOAD_SIZE_MAX=${N8N_PAYLOAD_SIZE_MAX}
+      - N8N_FORMDATA_FILE_SIZE_MAX=${N8N_FORMDATA_FILE_SIZE_MAX}
+      - N8N_DEFAULT_BINARY_DATA_MODE=filesystem
+      - N8N_PUBLIC_API_SWAGGERUI_DISABLED=true
+      - N8N_RUNNERS_ENABLED=true
+      - N8N_HIDE_USAGE_PAGE=true
+      - N8N_EMAIL_MODE=smtp
+      - N8N_SMTP_HOST=${N8N_SMTP_HOST}
+      - N8N_SMTP_PORT=${N8N_SMTP_PORT}
+      - N8N_SMTP_USER=${N8N_SMTP_USER}
+      - N8N_SMTP_PASS=${N8N_SMTP_PASS}
+      - N8N_SMTP_SENDER=${N8N_SMTP_USER}
+      - N8N_SMTP_SSL=false
+      - N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true
+      - GENERIC_TIMEZONE=${TIMEZONE}
+      - TZ=${TIMEZONE}
+    ports:
+      - ${N8N_PORT}:5678
+    volumes:
+      - ./n8n/storage:/home/node/.n8n
+      - ./n8n/backup:/backup
+      - ./n8n/shared:/data/shared
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: ["CMD", "sh", "-c", "(wget -q -T 5 -O - http://127.0.0.1:5678/healthz 2>/dev/null | grep -qF '{\"status\":\"ok\"}') || exit 1"]
+      start_period: 1m00s
+      interval: 5s
+      timeout: 10s
+      retries: 10
+
+x-postgres-base: &postgres-base
+    image: postgres:latest
+    hostname: ${phostname}
+    container_name: ${phostname}
+    pull_policy: ${pull_policy}
+    restart: ${restart}
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -h localhost -U user -d ${POSTGRES_DB}']
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+x-redis-base: &redis-base
+    image: redis:latest
+    hostname: ${rhostname}
+    container_name: ${rhostname}
+    pull_policy: ${pull_policy}
+    restart: ${restart}
+    environment:
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_DATABASES=16
+      #- REDIS_ARGS=--save 20 1
+    volumes:
+      - ./redis:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    healthcheck:
+      test: ["CMD", "redis-cli","ping"]
+      start_period: 5s
+      interval: 1s
+      timeout: 3s
+      retries: 5
+
+################################################
+
+services:
+    n8n-all:
+        <<: *n8n-base
+        profiles: ["n8n"]
+        links:
+          - redis-all
+        depends_on:
+          postgres-all:
+            condition: service_healthy
+            restart: true
+          redis-all:
+            condition: service_healthy
+            restart: true
+
+    postgres-all:
+        <<: *postgres-base
+        profiles: ["n8n"]
+
+    redis-all:
+        <<: *redis-base
+        profiles: ["n8n", "openwebui"]
+
+    openwebui-all:
+        <<: *openwebui-base
+        profiles: ["openwebui"]
+        links:
+          - redis-all
+        depends_on:
+          redis-all:
+            condition: service_healthy
+            restart: true
