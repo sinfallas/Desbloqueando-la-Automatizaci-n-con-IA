@@ -1,0 +1,142 @@
+{
+  "name": "ejemplo2",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -200,
+        -80
+      ],
+      "id": "185405ac-7d01-44a5-b9a2-aba95dcd6111",
+      "name": "When chat message received",
+      "webhookId": "63ae93ae-1b55-4bbd-afd9-1b2ed3944240"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        20,
+        -80
+      ],
+      "id": "3d7d31ec-e944-4447-9ed7-5a5d77e6828e",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        160
+      ],
+      "id": "9ee99ac1-1de5-4f19-a034-8381899b8c50",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "xymrryv6wbWhYNOd",
+          "name": "Google Gemini(PaLM) Api account sinfallas"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 50
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        120,
+        160
+      ],
+      "id": "f8212e64-16bc-43f6-9820-f4c64d862be1",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}",
+        "body": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Body', ``, 'string') }}"
+      },
+      "type": "n8n-nodes-base.pushbulletTool",
+      "typeVersion": 1,
+      "position": [
+        300,
+        160
+      ],
+      "id": "a8002380-18fc-4eec-be1a-db5a42e9ba9c",
+      "name": "Pushbullet",
+      "credentials": {
+        "pushbulletOAuth2Api": {
+          "id": "pl1XW2vXX2m84Ca3",
+          "name": "Pushbullet  sinfallas"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pushbullet": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "136a4939-0753-4212-bdae-0c367533ceb2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5d7cd8c0612c3c9f6b1aaad343a794c642582938ff7ecf165a06281225de139b"
+  },
+  "id": "6d5mdmRG4ypH9zlU",
+  "tags": []
+}

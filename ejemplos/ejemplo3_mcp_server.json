@@ -1,0 +1,107 @@
+{
+  "name": "ejemplo3-mcp-server",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "56dd7d73-e021-4570-8441-3e118a0d5d1c"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        -160
+      ],
+      "id": "ff710f62-6189-4cc8-b33e-272275875002",
+      "name": "MCP Server Trigger",
+      "webhookId": "56dd7d73-e021-4570-8441-3e118a0d5d1c"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        100
+      ],
+      "id": "c88c5a6c-3aac-4664-ab94-f4ae885f1b76",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolWolframAlpha",
+      "typeVersion": 1,
+      "position": [
+        60,
+        100
+      ],
+      "id": "a7800600-3897-40a2-9027-feed2cb5d634",
+      "name": "Wolfram Alpha",
+      "credentials": {
+        "wolframAlphaApi": {
+          "id": "9DLvM9xQy63jr3D5",
+          "name": "WolframAlphaApi  sinfallas"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        220,
+        100
+      ],
+      "id": "2b445393-0da6-4ad5-ab12-57aa39c64fac",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wolfram Alpha": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "e78c61c8-8bd8-4987-893b-ac5794c3a212",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5d7cd8c0612c3c9f6b1aaad343a794c642582938ff7ecf165a06281225de139b"
+  },
+  "id": "X6YPCC3DXADC8QtK",
+  "tags": []
+}
