@@ -17,7 +17,9 @@
     },
     {
       "parameters": {
-        "options": {}
+        "options": {
+          "systemMessage": "=You are a helpful assistant\n\nInvoke the knowledge_base_rag tool automatically (without user confirmation) for queries related to any of the following topics: \n\n* Debian and Linux.\n"
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
@@ -62,7 +64,9 @@
       "name": "Simple Memory"
     },
     {
-      "parameters": {},
+      "parameters": {
+        "sseEndpoint": "https://n8n.sinfallas.org/mcp/expoisp/sse"
+      },
       "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
       "typeVersion": 1,
       "position": [
@@ -71,31 +75,6 @@
       ],
       "id": "b5da8a35-32ec-42b1-a866-cb52255ceb3f",
       "name": "MCP Client"
-    },
-    {
-      "parameters": {
-        "mode": "retrieve-as-tool",
-        "pineconeIndex": {
-          "__rl": true,
-          "mode": "list",
-          "value": ""
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
-      "typeVersion": 1.2,
-      "position": [
-        400,
-        100
-      ],
-      "id": "3a4d846c-998f-4d02-9f39-77692e5c6f2b",
-      "name": "Pinecone Vector Store",
-      "credentials": {
-        "pineconeApi": {
-          "id": "PJlbimpJxBvf0koA",
-          "name": "PineconeApi  sinfallas"
-        }
-      }
     },
     {
       "parameters": {
@@ -113,6 +92,36 @@
         "googlePalmApi": {
           "id": "xymrryv6wbWhYNOd",
           "name": "Google Gemini(PaLM) Api account sinfallas"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "knowledge_base_rag",
+        "toolDescription": "=Call this tool every time a user asks you something related to:\n\n* Debian and Linux.\n\nUse this tool without asking the user for confirmation.",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8n",
+          "mode": "list",
+          "cachedResultName": "n8n"
+        },
+        "options": {
+          "pineconeNamespace": "expoisp"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        100
+      ],
+      "id": "3a4d846c-998f-4d02-9f39-77692e5c6f2b",
+      "name": "knowledge_base_rag",
+      "credentials": {
+        "pineconeApi": {
+          "id": "PJlbimpJxBvf0koA",
+          "name": "PineconeApi  sinfallas"
         }
       }
     }
@@ -163,23 +172,23 @@
         ]
       ]
     },
-    "Pinecone Vector Store": {
-      "ai_tool": [
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
         [
           {
-            "node": "AI Agent",
-            "type": "ai_tool",
+            "node": "knowledge_base_rag",
+            "type": "ai_embedding",
             "index": 0
           }
         ]
       ]
     },
-    "Embeddings Google Gemini": {
-      "ai_embedding": [
+    "knowledge_base_rag": {
+      "ai_tool": [
         [
           {
-            "node": "Pinecone Vector Store",
-            "type": "ai_embedding",
+            "node": "AI Agent",
+            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -190,11 +199,18 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "5a18d11a-8db8-463d-bbde-c58c0c966e1d",
+  "versionId": "cf1a82a7-e43d-4b38-9505-a5e2576c5f5f",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "5d7cd8c0612c3c9f6b1aaad343a794c642582938ff7ecf165a06281225de139b"
   },
   "id": "sHOrHV9nkW9qyTeS",
-  "tags": []
+  "tags": [
+    {
+      "createdAt": "2025-06-09T21:27:05.935Z",
+      "updatedAt": "2025-06-09T21:27:05.935Z",
+      "id": "s9fpfSCGkndFbirY",
+      "name": "expoisp"
+    }
+  ]
 }

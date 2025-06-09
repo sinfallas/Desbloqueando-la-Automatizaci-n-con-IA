@@ -30,6 +30,7 @@
     },
     {
       "parameters": {
+        "modelName": "models/gemini-1.5-flash",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
@@ -62,6 +63,8 @@
     },
     {
       "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "use this tool to send a notification to all my devices in the form of a small text note with its title",
         "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}",
         "body": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Body', ``, 'string') }}"
       },
@@ -132,7 +135,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "136a4939-0753-4212-bdae-0c367533ceb2",
+  "versionId": "b3bba542-ecdb-49ed-be69-c4601ebc4b67",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "5d7cd8c0612c3c9f6b1aaad343a794c642582938ff7ecf165a06281225de139b"

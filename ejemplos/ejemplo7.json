@@ -3,6 +3,7 @@
   "nodes": [
     {
       "parameters": {
+        "httpMethod": "POST",
         "path": "expoisp",
         "responseMode": "responseNode",
         "options": {}
@@ -19,7 +20,11 @@
     },
     {
       "parameters": {
-        "options": {}
+        "promptType": "define",
+        "text": "={{ $json.body.chatInput }}",
+        "options": {
+          "systemMessage": "=You are a helpful assistant\n\nInvoke the knowledge_base_rag tool automatically (without user confirmation) for queries related to any of the following topics: \n\n* Debian and Linux.\n"
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
@@ -52,6 +57,8 @@
     },
     {
       "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook').item.json.body.sessionId }}",
         "contextWindowLength": 50
       },
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
@@ -88,7 +95,9 @@
       "name": "Think"
     },
     {
-      "parameters": {},
+      "parameters": {
+        "sseEndpoint": "https://n8n.sinfallas.org/mcp/expoisp/sse"
+      },
       "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
       "typeVersion": 1,
       "position": [
@@ -100,38 +109,13 @@
     },
     {
       "parameters": {
-        "mode": "retrieve-as-tool",
-        "pineconeIndex": {
-          "__rl": true,
-          "mode": "list",
-          "value": ""
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
-      "typeVersion": 1.2,
-      "position": [
-        280,
-        460
-      ],
-      "id": "7b4e7a0d-a1b5-4225-97eb-14f90275a366",
-      "name": "Pinecone Vector Store",
-      "credentials": {
-        "pineconeApi": {
-          "id": "PJlbimpJxBvf0koA",
-          "name": "PineconeApi  sinfallas"
-        }
-      }
-    },
-    {
-      "parameters": {
         "modelName": "models/text-embedding-004"
       },
       "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
       "typeVersion": 1,
       "position": [
-        380,
-        680
+        220,
+        620
       ],
       "id": "5c55b32c-7050-4cd3-ba63-7a67d3f16b96",
       "name": "Embeddings Google Gemini",
@@ -139,6 +123,36 @@
         "googlePalmApi": {
           "id": "xymrryv6wbWhYNOd",
           "name": "Google Gemini(PaLM) Api account sinfallas"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "knowledge_base_rag",
+        "toolDescription": "=Call this tool every time a user asks you something related to:\n\n* Debian and Linux.\n\nUse this tool without asking the user for confirmation.",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8n",
+          "mode": "list",
+          "cachedResultName": "n8n"
+        },
+        "options": {
+          "pineconeNamespace": "expoisp"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        440
+      ],
+      "id": "84999521-c1c1-4bee-88de-5b2578fed3fd",
+      "name": "knowledge_base_rag",
+      "credentials": {
+        "pineconeApi": {
+          "id": "PJlbimpJxBvf0koA",
+          "name": "PineconeApi  sinfallas"
         }
       }
     }
@@ -211,7 +225,18 @@
         ]
       ]
     },
-    "Pinecone Vector Store": {
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "knowledge_base_rag",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "knowledge_base_rag": {
       "ai_tool": [
         [
           {
@@ -221,24 +246,13 @@
           }
         ]
       ]
-    },
-    "Embeddings Google Gemini": {
-      "ai_embedding": [
-        [
-          {
-            "node": "Pinecone Vector Store",
-            "type": "ai_embedding",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "d225956c-caf2-447c-b17c-17eac249739a",
+  "versionId": "dd6b2076-a83e-4965-8859-1fd5c4bb0fa1",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "5d7cd8c0612c3c9f6b1aaad343a794c642582938ff7ecf165a06281225de139b"
