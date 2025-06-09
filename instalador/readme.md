@@ -16,13 +16,27 @@ Para acceder a Open WebUI vaya a: http://localhost:8080
 
 Servicios recomendados:
 
+Vector DB:
+* [Pinecone](https://www.pinecone.io/)
 * [Chroma](https://github.com/chroma-core/chroma)
 * [Qdrant](https://github.com/qdrant/qdrant)
+
+UI:
 * [OpenwebUI](https://github.com/open-webui/open-webui)
-* [Airtable](https://airtable.com/)
-* [Pinecone](https://www.pinecone.io/)
+
+Memoria:
 * [Zep](https://www.getzep.com/)
+* [Airtable](https://airtable.com/)
+
+Voz:
 * [Elevenlabs](https://elevenlabs.io/)
+
+Modelos:
 * [Openrouter](https://openrouter.ai/)
+
+Buscador:
 * [Tavily](https://tavily.com/)
 
+Web Scrapping:
+* [Jina.AI](https://jina.ai)
+* [Browserless](https://www.browserless.io/)
