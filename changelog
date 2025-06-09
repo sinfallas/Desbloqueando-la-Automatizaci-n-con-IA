@@ -1,4 +1,28 @@
-commit b50aaf5c0801ac88b0c9902ab9b34a19f0445c08 (HEAD -> main, origin/main, origin/HEAD)
+commit d4789bfc12bbe4094b3043412af649cc925394c3 (HEAD -> main, origin/main, origin/HEAD)
+Author: Jesus Palencia <sinfallas@gmail.com>
+Date:   Mon Jun 9 17:43:18 2025 -0400
+
+    * bugfix
+
+commit 1c747557abca5823784d915cef5e7bd0bed8f17e
+Author: Jesus Palencia <sinfallas@gmail.com>
+Date:   Mon Jun 9 17:08:19 2025 -0400
+
+    * readme
+
+commit ea772af886dafbf287d4825c059a6cfdadc7a718
+Author: Jesus Palencia <sinfallas@gmail.com>
+Date:   Mon Jun 9 16:51:12 2025 -0400
+
+    * readme
+
+commit 5e0eed0e16ce1e352aac9da84764013e1ef87ceb
+Author: Jesus Palencia <sinfallas@gmail.com>
+Date:   Mon Jun 9 16:45:30 2025 -0400
+
+    * changelog
+
+commit b50aaf5c0801ac88b0c9902ab9b34a19f0445c08
 Author: Jesus Palencia <sinfallas@gmail.com>
 Date:   Mon Jun 9 16:45:21 2025 -0400
 
