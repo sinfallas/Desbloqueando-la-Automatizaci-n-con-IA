@@ -1,4 +1,16 @@
-commit d4789bfc12bbe4094b3043412af649cc925394c3 (HEAD -> main, origin/main, origin/HEAD)
+commit a403e4ed9ed4c1f9bdbf17872feab62d28fb8d2b (HEAD -> main, origin/main, origin/HEAD)
+Author: Jesus Palencia <sinfallas@gmail.com>
+Date:   Tue Jun 10 06:59:39 2025 -0400
+
+    * se agregan mas funciones
+
+commit 0dcc52e8ab8e7ba5f40454e6e55696dafdb51a72
+Author: Jesus Palencia <sinfallas@gmail.com>
+Date:   Mon Jun 9 17:43:25 2025 -0400
+
+    * changelog
+
+commit d4789bfc12bbe4094b3043412af649cc925394c3
 Author: Jesus Palencia <sinfallas@gmail.com>
 Date:   Mon Jun 9 17:43:18 2025 -0400
 
