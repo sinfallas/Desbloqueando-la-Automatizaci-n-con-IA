@@ -3,7 +3,7 @@
   "nodes": [
     {
       "parameters": {
-        "path": "56dd7d73-e021-4570-8441-3e118a0d5d1c"
+        "path": "expoisp"
       },
       "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
       "typeVersion": 1,
@@ -57,6 +57,49 @@
       ],
       "id": "2b445393-0da6-4ad5-ab12-57aa39c64fac",
       "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "name": "tavily_search",
+        "description": "Call this tool to search for something on the Internet, use this tool without asking the user for confirmation.",
+        "workflowId": {
+          "__rl": true,
+          "value": "3gwI2t3j99vkr3mJ",
+          "mode": "list",
+          "cachedResultName": "tavily"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('query', `Here you will place what you want to search on the internet`, 'string') }}"
+          },
+          "matchingColumns": [
+            "query"
+          ],
+          "schema": [
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.1,
+      "position": [
+        380,
+        100
+      ],
+      "id": "105087b6-46e2-4115-a209-df4455131706",
+      "name": "tavily_search"
     }
   ],
   "pinData": {},
@@ -93,17 +136,35 @@
           }
         ]
       ]
+    },
+    "tavily_search": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "7978cb0d-f28a-4876-b502-b0a24e4da5ab",
+  "versionId": "c03bc7c3-4c50-49fb-af79-ea57c8d74335",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "5d7cd8c0612c3c9f6b1aaad343a794c642582938ff7ecf165a06281225de139b"
   },
   "id": "X6YPCC3DXADC8QtK",
-  "tags": []
+  "tags": [
+    {
+      "createdAt": "2025-06-09T21:27:05.935Z",
+      "updatedAt": "2025-06-09T21:27:05.935Z",
+      "id": "s9fpfSCGkndFbirY",
+      "name": "expoisp"
+    }
+  ]
 }

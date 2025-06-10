@@ -17,7 +17,9 @@
     },
     {
       "parameters": {
-        "options": {}
+        "options": {
+          "systemMessage": "=You are a helpful assistant\n\nUse the mikrotik_api tool to connect to the Mikrotik router that provides your internet connection. When using this tool, do not request username, password, or IP, they are preconfigured. Pass the parameters as follows: \n\n* Resource: here you put the location of the resource, example: /tool/netwatch\n* Operation: Here you put the actions you want to do, example: print\n\nYou can use the parameters in this example to know the status of your internet connections."
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
@@ -71,7 +73,7 @@
       "type": "n8n-nodes-base.pushbulletTool",
       "typeVersion": 1,
       "position": [
-        300,
+        480,
         160
       ],
       "id": "a8002380-18fc-4eec-be1a-db5a42e9ba9c",
@@ -82,6 +84,56 @@
           "name": "Pushbullet  sinfallas"
         }
       }
+    },
+    {
+      "parameters": {
+        "name": "mikrotik_api",
+        "description": "You should always look in the knowledge_base_rag tool for the rest_api parameters necessary to perform the task requested by the user, then pass the parameters to this tool as follows:\n\n* Resource: here you put the location of the resource, example: /tool/netwatch\n* Operation: Here you put the actions you want to do, example: print",
+        "workflowId": {
+          "__rl": true,
+          "value": "wKNtK1XEneqncWHW",
+          "mode": "list",
+          "cachedResultName": "mtkapi"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Resource": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Resource', `here you put the location of the resource, example: /tool/netwatch`, 'string') }}",
+            "Operation": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Operation', `Here you put the actions you want to do, example: print`, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Resource",
+              "displayName": "Resource",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "Operation",
+              "displayName": "Operation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.1,
+      "position": [
+        300,
+        160
+      ],
+      "id": "b67d32bd-e740-47b6-b695-2c765f635616",
+      "name": "mikrotik_api"
     }
   ],
   "pinData": {},
@@ -129,17 +181,35 @@
           }
         ]
       ]
+    },
+    "mikrotik_api": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "b3bba542-ecdb-49ed-be69-c4601ebc4b67",
+  "versionId": "d135658f-1df2-43b9-ae8c-2a589a6582de",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "5d7cd8c0612c3c9f6b1aaad343a794c642582938ff7ecf165a06281225de139b"
   },
   "id": "6d5mdmRG4ypH9zlU",
-  "tags": []
+  "tags": [
+    {
+      "createdAt": "2025-06-09T21:27:05.935Z",
+      "updatedAt": "2025-06-09T21:27:05.935Z",
+      "id": "s9fpfSCGkndFbirY",
+      "name": "expoisp"
+    }
+  ]
 }
