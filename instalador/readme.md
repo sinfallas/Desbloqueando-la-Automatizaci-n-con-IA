@@ -1,8 +1,8 @@
 # N8n
 
-Made by: [Tecno Consultores 2023](https://www.tecnoconsultores.net/)
+Basado en: [llm-lab](https://github.com/tecno-consultores/llm-lab)
 
-To run N8N and Open WebUI with recommendations on AMD64/ARM64 (Postgres, Redis):
+Para ejecutar N8N con todas las recomendacion en AMD64/ARM64 (Postgres, Redis):
 
 ```bash
 docker compose -f docker-compose.yml --env-file env.example --profile n8n --profile openwebui up -d
